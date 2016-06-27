@@ -157,7 +157,7 @@
                 oReq.addEventListener("load", function() {
                     gameObj.color = this.responseText.trim();
                     console.log("Game color: " + gameObj.color);
-                    document.getElementById("findimg").src = "button-" + gameObj.color + ".png";
+                    document.getElementById("findimg").src = gameObj.color + ".png";
                 });
                 oReq.open("GET", "https://webtrends.github.io/iot-game/color.txt");
                 oReq.send();
@@ -165,9 +165,9 @@
         }
 
         function setButtons(colors) {
-          document.getElementById('i1').src = "button-" + colors[0] + ".png";
-          document.getElementById('i2').src = "button-" + colors[1] + ".png";
-          document.getElementById('i3').src = "button-" + colors[2] + ".png";
+          document.getElementById('i1').src = colors[0] + ".png";
+          document.getElementById('i2').src = colors[1] + ".png";
+          document.getElementById('i3').src = colors[2] + ".png";
         }
     </script>
 
@@ -182,21 +182,21 @@
                 <div id="account-search">
                     <input type="text" placeholder="Player Name" class="search" tabindex="1" id="playerName">
                 </div>
-                <div id="account-note">Please find the button: <img id="findimg" src="button-grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"> </div>
+                <div id="account-note">Please find the button: <img id="findimg" src="grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"> </div>
                 <ul id="account-list" class="list">
                     <li tabindex="1" style="line-height: 100px">
                         <div id="d1">
-                            <img id="i1" src="button-grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"><span id="b1" class="button-value">Button 1</span>
+                            <img id="i1" src="grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"><span id="b1" class="button-value">Button 1</span>
                         </div>
                     </li>
                     <li tabindex="2" style="line-height: 100px">
                         <div id="d2">
-                            <img id="i2" src="button-grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"><span id="b2" class="button-value">Button 2</span>
+                            <img id="i2" src="grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"><span id="b2" class="button-value">Button 2</span>
                         </div>
                     </li>
                     <li tabindex="3" style="line-height: 100px">
                         <div id="d3">
-                            <img id="i3" src="button-grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"><span id="b3" class="button-value">Button 3</span>
+                            <img id="i3" src="grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"><span id="b3" class="button-value">Button 3</span>
                         </div>
                     </li>
                 </ul>
