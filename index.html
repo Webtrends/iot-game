@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- B.Favicons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="https://s.staging.dmz/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://s.staging.dmz/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://s.staging.dmz/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://s.staging.dmz/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://s.staging.dmz/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://s.staging.dmz/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://s.staging.dmz/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://s.staging.dmz/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://s.staging.dmz/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="https://s.staging.dmz/favicons/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="https://s.staging.dmz/favicons/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="https://s.staging.dmz/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="https://s.staging.dmz/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://s.staging.dmz/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://s.staging.dmz/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-TileImage" content="https://s.staging.dmz/favicons/mstile-144x144.png" />
+    <!-- E.Favicons -->
+
+    <link href='https://s.staging.dmz/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link href='https://s.staging.dmz/css/open-sans.css' rel='stylesheet' type='text/css'>
+    <link href='https://s.staging.dmz/css/sso-login.css' rel='stylesheet' type='text/css'>
+    <script src="https://s.staging.dmz/javascript/list.min.js"></script>
+    <script src="https://s.staging.dmz/javascript/login.js"></script>
+
+    <style>
+        .disabled {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+    </style>
+
+    <script language="JavaScript" type="text/javascript">
+        var gameObj = {};
+        document.addEventListener("DOMContentLoaded", function(event) {
+
+            function reqListener() {
+                gameObj.uid = this.responseText.trim();
+                console.log("UID: " + gameObj.uid);
+            };
+
+            var oReq = new XMLHttpRequest();
+
+
+            oReq.addEventListener("load", reqListener);
+            oReq.open("GET", "https://scs.webtrends.com/v1/dcs222ttc4miazdxybrzt95tg_6f3z/ids.svc");
+            oReq.send();
+
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", function() {
+                gameObj.color = this.responseText;
+                console.log("Game color: " + gameObj.color);
+                document.getElementById("findimg").src = "button-" + gameObj.color + ".png";
+            });
+            oReq.open("GET", "https://webtrends.github.io/iot-game/color.txt");
+            oReq.send();
+
+            document.getElementById("playerName").focus();
+
+            // Date
+            now = new Date();
+            theYear = now.getYear();
+            if (theYear < 1900) {
+                theYear = theYear + 1900;
+            }
+            document.getElementById("copyright").innerHTML = theYear;
+
+            // How tall is the search box?
+            var howhi = document.getElementById("account-list").offsetHeight;
+            document.getElementById("account-list").style.height = howhi + "px";
+
+            // Hide search if small account number
+            var counts = document.getElementsByTagName("LI");
+            // Add List selection commands
+            for (var i = 0; i < counts.length; i++) {
+
+                // Add Click Events
+                counts[i].getElementsByTagName("div")[0].addEventListener("click", clickAccount);
+            }
+
+        });
+
+
+        function clickAccount(e) {
+            if (document.getElementById("playerName").value == "") {
+              alert("Please enter a player name.");
+              return;
+            }
+            accountSelected(e.target.id.substr(1, 1));
+        }
+
+        /**
+         * Randomize array element order in-place.
+         * Using Durstenfeld shuffle algorithm.
+         */
+        function shuffle(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         *
+         * EDIT THIS TO MAKE THE REDIRECT!
+         *
+         * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        function accountSelected(which) {
+            var buttonColors = shuffle(["red", "blue", "green"]);
+            var color = buttonColors[which - 1];
+            console.log("Button ID: " + which);
+            console.log("Button Color: " + color);
+
+            setButtons(buttonColors);
+            var data = {};
+            data['iot-player'] = document.getElementById("playerName").value;
+            data["iot-button"] = which;
+            data['dcsuri'] = window.location.pathname;
+            data["iot-button-color"] = color;
+            data['iot-result'] = (gameObj.color == color);
+            data['WT.co_f'] = gameObj.uid;
+
+            function toParam(obj) {
+              var str = "";
+              var seperator = "";
+              for (key in obj) {
+                str += seperator;
+                str += encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
+                seperator = "&";
+              }
+              return str;
+            };
+
+            var oReq = new XMLHttpRequest();
+            oReq.open("POST", "https://scs.webtrends.com/v1/dcs222ttc4miazdxybrzt95tg_6f3z/events.svc");
+            oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            oReq.send(toParam(data));
+
+            document.getElementById("account-list").className += " disabled";
+            setTimeout(function() {
+                setButtons(["grey", "grey", "grey"]);
+                document.getElementById("account-list").className =
+                    document.getElementById("account-list").className.replace(/(?:^|\s)disabled(?!\S)/g, '');
+                var oReq = new XMLHttpRequest();
+                oReq.addEventListener("load", function() {
+                    gameObj.color = this.responseText.trim();
+                    console.log("Game color: " + gameObj.color);
+                    document.getElementById("findimg").src = "button-" + gameObj.color + ".png";
+                });
+                oReq.open("GET", "https://webtrends.github.io/iot-game/color.txt");
+                oReq.send();
+            }, 5000);
+        }
+
+        function setButtons(colors) {
+          document.getElementById('i1').src = "button-" + colors[0] + ".png";
+          document.getElementById('i2').src = "button-" + colors[1] + ".png";
+          document.getElementById('i3').src = "button-" + colors[2] + ".png";
+        }
+    </script>
+
+
+    <title>Webtrends | IoT-Game</title>
+</head>
+
+<body>
+    <div class="ping-container ping-account">
+        <div class="ping-body-container">
+            <div id="account-wrap">
+                <div id="account-search">
+                    <input type="text" placeholder="Player Name" class="search" tabindex="1" id="playerName">
+                </div>
+                <div id="account-note">Please find the button: <img id="findimg" src="button-grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"> </div>
+                <ul id="account-list" class="list">
+                    <li tabindex="1" style="line-height: 100px">
+                        <div id="d1">
+                            <img id="i1" src="button-grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"><span id="b1" class="button-value">Button 1</span>
+                        </div>
+                    </li>
+                    <li tabindex="2" style="line-height: 100px">
+                        <div id="d2">
+                            <img id="i2" src="button-grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"><span id="b2" class="button-value">Button 2</span>
+                        </div>
+                    </li>
+                    <li tabindex="3" style="line-height: 100px">
+                        <div id="d3">
+                            <img id="i3" src="button-grey.png" width="80px" height="80px" style="padding-right: 10px; vertical-align: middle;"><span id="b3" class="button-value">Button 3</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="footer" class="smalltext">
+            &copy;<span id="copyright"></span> Webtrends, Inc.&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://webtrends.com/privacy-statement/">Privacy Policy</a>&nbsp;&nbsp;<a href="http://webtrends.com/terms-of-subscription-service/">Terms of Service</a>
+        </div>
+    </div>
+</body>
+
+</html>
