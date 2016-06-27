@@ -1,7 +1,7 @@
 body{
   padding:0;
   margin:0;
-  background: url('../images/bg.png') repeat-x #0A0E12;
+  background: url('bg.png') repeat-x #0A0E12;
   font-family: 'Open Sans', sans-serif;
   color:#ffffff;
   display: -webkit-box;
@@ -35,7 +35,7 @@ a.inline-anchor{
 }
 .ping-container, .container{
   /*width:615px;*/
-  background: url('../images/sp-webtrends_logo_white.png') left center no-repeat;
+  background: url('sp-webtrends_logo_white.png') left center no-repeat;
   background-size: 150px;
 }
 @media only screen and (min--moz-device-pixel-ratio: 2),
@@ -43,7 +43,7 @@ only screen and (-o-min-device-pixel-ratio: 2/1),
 only screen and (-webkit-min-device-pixel-ratio: 2),
 only screen and (min-device-pixel-ratio: 2) {
   .ping-container, .container{
-      background: url('../images/sp-webtrends_logo_white@2x.png') left center no-repeat;
+      background: url('sp-webtrends_logo_white@2x.png') left center no-repeat;
       background-size: 150px;
   }
 }
