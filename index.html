@@ -58,7 +58,7 @@
             oReq.addEventListener("load", function() {
                 gameObj.color = this.responseText;
                 console.log("Game color: " + gameObj.color);
-                document.getElementById("findimg").src = "button-" + gameObj.color + ".png";
+                document.getElementById("findimg").src = gameObj.color + ".png";
             });
             oReq.open("GET", "https://webtrends.github.io/iot-game/color.txt");
             oReq.send();
