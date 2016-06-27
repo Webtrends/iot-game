@@ -108,9 +108,12 @@
             var data = {};
             data['iot-player'] = document.getElementById("playerName").value;
             data["iot-button"] = which;
+            data["iot-button-name"] = "Button " + which;
             data['dcsuri'] = window.location.pathname;
             data["iot-button-color"] = color;
+            data["iot-game-color"] = gameObj.color;
             data['iot-result'] = (gameObj.color == color);
+            data['iot-result-name'] = (gameObj.color == color ? "Winner" : "Looser");
             data['WT.co_f'] = gameObj.uid;
 
             function toParam(obj) {
