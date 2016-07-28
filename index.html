@@ -10,7 +10,7 @@
     <link href='font-awesome.min.css' rel='stylesheet' type='text/css'>
     <link href='open-sans.css' rel='stylesheet' type='text/css'>
     <link href='sso-login.css' rel='stylesheet' type='text/css'>
-    
+
 	<!-- millions of touch icons yay!-->
 	<link rel="apple-touch-icon" sizes="57x57" href="//cdn.webtrends.com/images/favicons/apple-touch-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="114x114" href="//cdn.webtrends.com/images/favicons/apple-touch-icon-114x114.png">
@@ -26,7 +26,7 @@
 	<link rel="icon" type="image/png" href="//cdn.webtrends.com/images/favicons/favicon-96x96.png" sizes="96x96">
 	<link rel="icon" type="image/png" href="//cdn.webtrends.com/images/favicons/favicon-16x16.png" sizes="16x16">
 	<link rel="icon" type="image/png" href="//cdn.webtrends.com/images/favicons/favicon-32x32.png" sizes="32x32">
-	
+
     <script src="list.min.js"></script>
     <script src="login.js"></script>
 
@@ -55,7 +55,7 @@
 
             var oReq = new XMLHttpRequest();
             oReq.addEventListener("load", function() {
-                gameObj.color = this.responseText;
+                gameObj.color = this.responseText.trim();
                 if (gameObj.color == "random") {
                   gameObj.color = shuffle(["red", "blue", "green"]);
                 }
@@ -133,7 +133,7 @@
             data["iot-button-color"] = color;
             data["iot-game-color"] = gameObj.color;
             data['iot-result'] = (gameObj.color == color);
-            data['iot-result-name'] = (gameObj.color == color ? "Winner" : "Looser");
+            data['iot-result-name'] = (gameObj.color == color ? "Winner" : "Loser");
             data['WT.co_f'] = gameObj.uid;
 
             function toParam(obj) {
