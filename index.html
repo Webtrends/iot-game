@@ -57,7 +57,7 @@
             oReq.addEventListener("load", function() {
                 gameObj.color = this.responseText.trim();
                 if (gameObj.color == "random") {
-                  gameObj.color = shuffle(["red", "blue", "green"]);
+                  gameObj.color = shuffle(["red", "blue", "green"])[0];
                 }
                 console.log("Game color: " + gameObj.color);
                 document.getElementById("findimg").src = gameObj.color + ".png";
@@ -162,7 +162,7 @@
                 oReq.addEventListener("load", function() {
                     gameObj.color = this.responseText.trim();
                     if (gameObj.color == "random") {
-                      gameObj.color = shuffle(["red", "blue", "green"]);
+                      gameObj.color = shuffle(["red", "blue", "green"])[0];
                     }
                     console.log("Game color: " + gameObj.color);
                     document.getElementById("findimg").src = gameObj.color + ".png";
